@@ -173,7 +173,13 @@ class PacManEnv(gym.Env):
         super().reset(seed=seed)
         self._game.reset()
         self._step_count = 0
+        self._prev_direction = Direction.NONE
+        self._visited = set()
+        self._visited.add((self._game.pac_row, self._game.pac_col))
         return self._get_obs(), {}
+
+    # Direction opposites for reversal detection
+    _OPPOSITE = {0: 2, 2: 0, 1: 3, 3: 1}
 
     def step(self, action: int):
         direction = Direction(action)
@@ -181,8 +187,20 @@ class PacManEnv(gym.Env):
         state, reward, done = self._game.step()
         self._step_count += 1
 
-        # Time-based penalty that grows over time to discourage stalling
-        reward -= 1 + self._step_count / 100.0
+        # Penalize direction reversal (turning 180°)
+        if (self._prev_direction != Direction.NONE
+                and self._OPPOSITE.get(int(self._prev_direction)) == action):
+            reward -= 5
+        self._prev_direction = Direction(state["pac_dir"])
+
+        # Exploration bonus for visiting new tiles
+        pos = tuple(state["pac_pos"])
+        if pos not in self._visited:
+            self._visited.add(pos)
+            reward += 2
+
+        # Time-based penalty
+        reward -= 0.5 + self._step_count / 200.0
 
         # Truncate if max steps exceeded
         truncated = self._step_count >= self.max_steps

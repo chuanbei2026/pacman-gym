@@ -58,36 +58,8 @@ def draw_maze(surface: pygame.Surface, grid: list[list[int]], offset_y: int):
             tile = grid[r][c]
 
             if tile == WALL:
-                # Draw wall outline style: blue border on edges adjacent to non-wall
-                cx = x + TILE_SIZE // 2
-                cy = y + TILE_SIZE // 2
-                half = TILE_SIZE // 2
-                thickness = 3
-
-                # Check neighbors
-                up = _is_wall(grid, r - 1, c)
-                down = _is_wall(grid, r + 1, c)
-                left = _is_wall(grid, r, c - 1)
-                right = _is_wall(grid, r, c + 1)
-
-                # Draw connecting lines through center to adjacent walls
-                if up:
-                    pygame.draw.line(surface, WALL_COLOR, (cx, y), (cx, cy), thickness)
-                if down:
-                    pygame.draw.line(surface, WALL_COLOR, (cx, cy), (cx, y + TILE_SIZE), thickness)
-                if left:
-                    pygame.draw.line(surface, WALL_COLOR, (x, cy), (cx, cy), thickness)
-                if right:
-                    pygame.draw.line(surface, WALL_COLOR, (cx, cy), (x + TILE_SIZE, cy), thickness)
-
-                # If isolated or corner, draw a small square
-                if not (up or down or left or right):
-                    pygame.draw.rect(surface, WALL_COLOR, (cx - 2, cy - 2, 4, 4))
-
-                # Draw rounded corners where wall meets open space
-                neighbors = sum([up, down, left, right])
-                if neighbors <= 1:
-                    pygame.draw.circle(surface, WALL_COLOR, (cx, cy), thickness // 2 + 1)
+                # Solid filled wall block with slight inset for grid look
+                pygame.draw.rect(surface, WALL_COLOR, (x + 1, y + 1, TILE_SIZE - 2, TILE_SIZE - 2))
 
             elif tile == DOT:
                 cx = x + TILE_SIZE // 2

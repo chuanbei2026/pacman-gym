@@ -22,7 +22,7 @@ APPLE_SCORE = 100
 GHOST_EAT_SCORE = 200
 
 # Timing (in ticks)
-APPLE_SPAWN_INTERVAL = 420   # ~14 seconds at FPS=7
+APPLE_SPAWN_INTERVAL = 100   # ~14 seconds at FPS=7
 INVINCIBLE_DURATION = 50     # ~7 seconds at FPS=7
 GHOST_STUN_DURATION = 70     # ~10 seconds at FPS=7
 
@@ -405,8 +405,8 @@ class PacManGame:
                     ghost.direction = random.choice([Direction.LEFT, Direction.RIGHT])
                 continue
 
-            # Ghost moves every 3 ticks out of 4 (slightly slower than pac-man)
-            if self.tick_count % 4 == 0:
+            # Ghost moves every 2 ticks out of 3 (slower than pac-man)
+            if self.tick_count % 3 == 0:
                 continue
 
             reverse_dir = OPPOSITE[ghost.direction]
@@ -472,7 +472,7 @@ class PacManGame:
                     reward += GHOST_EAT_SCORE
                 else:
                     self.game_over = True
-                    reward = -500
+                    reward = -1000
                     return reward
         return reward
 
