@@ -1,0 +1,24 @@
+# OS
+**/.DS_Store
+
+# Peru artifact directories
+/build
+/private
+/.hatch
+
+# Python
+*.egg-info/
+__pycache__/
+.coverage
+.ruff_cache
+.pytest_cache
+.mypy_cache
+.venv
+/htmlcov
+
+# experiment and assets
+*.base64.txt
+**/.ipynb_checkpionts/
+
+# Pac-Man model checkpoints
+pacman_gym/dqn_model.pt
