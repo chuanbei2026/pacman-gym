@@ -1,4 +1,4 @@
-[English](README.md)
+[In English](README.md) | 中文版
 
 # PacMan 深度 Q 网络 (DQN)
 
