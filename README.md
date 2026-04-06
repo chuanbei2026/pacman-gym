@@ -1,3 +1,5 @@
+[中文版](README_zh.md)
+
 # PacMan Deep Q-Network (DQN)
 
 A classic Pac-Man game that doubles as a hands-on Deep Q-Network (DQN) learning environment. Play it yourself, train a DQN agent, or watch the agent learn in real time with a live visualization of network internals.
